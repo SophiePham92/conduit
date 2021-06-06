@@ -1,0 +1,10 @@
+drop table if exists users;
+
+create table users(
+    user_id serial not null,
+    email varchar(255) not null unique,
+    username varchar(500) not null,
+    bio text,
+    image varchar(500)
+    primary key(user_id)
+);
