@@ -1,0 +1,19 @@
+drop table if exists comments;
+
+create table comments(
+    comment_id serial,
+    body text not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp,
+    user_id int not null,
+    article_id int not null,
+    primary key (comments),
+    foreign key (user_id)
+        references users(user_id)
+        on update cascade
+        on delete cascade,
+    foreign key (article_id)
+        references articles(article_id)
+        on update cascade
+        on delete cascade
+);
