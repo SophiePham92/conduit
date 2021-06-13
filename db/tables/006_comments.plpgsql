@@ -7,7 +7,7 @@ create table comments(
     updated_at timestamp default current_timestamp,
     user_id int not null,
     article_id int not null,
-    primary key (comments),
+    primary key (comment_id),
     foreign key (user_id)
         references users(user_id)
         on update cascade

@@ -1,0 +1,19 @@
+copy users
+from '/Users/a/Desktop/conduit/db/mocks/users.csv'
+delimiter ','
+csv header;
+
+copy articles(article_id,slug,title,description,body,author_id)
+from '/Users/a/Desktop/conduit/db/mocks/articles.csv'
+delimiter ','
+csv header;
+
+copy comments(body,user_id,article_id)
+from '/Users/a/Desktop/conduit/db/mocks/comments.csv'
+delimiter ','
+csv header;
+
+copy tags(name,article_id)
+from '/Users/a/Desktop/conduit/db/mocks/tags.csv'
+delimiter ','
+csv header;
