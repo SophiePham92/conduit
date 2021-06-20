@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION public.sign_up(p_email character varying, p_password character varying, p_username character varying, p_bio character varying DEFAULT ''::character varying, p_image character varying DEFAULT ''::character varying)
+ RETURNS users
+ LANGUAGE plpgsql
+AS $function$
+declare 
+    userRec record;
+    maxUserId int;
+begin 
+    SELECT MAX(user_id) FROM users into maxUserId;
+    insert into users(user_id, email, username, password, bio, image)
+    values (maxUserId + 1, p_email, p_username, p_password, p_bio, p_image)
+    returning * into userRec;
+
+    return userRec;
+end;
+$function$

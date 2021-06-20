@@ -1,0 +1,17 @@
+CREATE OR REPLACE FUNCTION public.log_in(p_email character varying, p_password character varying)
+ RETURNS users
+ LANGUAGE plpgsql
+AS $function$
+declare 
+    userRec record;
+begin
+    select *
+	from users
+    where email = p_email and users.password = p_password
+    into userRec;
+
+    raise notice 'User found: % - %',
+        userRec.email, userRec.username;
+	return userRec;
+end;
+$function$
