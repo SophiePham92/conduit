@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "/test"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "chai": "^4.3.4",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "mocha": "^9.0.1"
+  },
+  "scripts": {
+    "test": "mocha --timeout 50000",
+    "start": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
