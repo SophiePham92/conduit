@@ -8,9 +8,10 @@ function gatewayCheck(userRoleArray){
         if(required && !myUserDataRes.rows[0]) return res.status(401).json({
             message: "Unauthorized!"
         })
-
-        const {password, user_id, ...myUserDataReturned} = myUserDataRes.rows[0];
-        req.user = {...myUserDataReturned, userId: user_id};
+        if(myUserDataRes.rows[0]){
+            const {password, user_id, ...myUserDataReturned} = myUserDataRes.rows[0];
+            req.user = {...myUserDataReturned, userId: user_id};
+        }
         next()
     }
 }
