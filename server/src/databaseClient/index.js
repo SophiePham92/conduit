@@ -54,6 +54,7 @@ async function updateUser(userId, updateUserData){
 }
 
 module.exports = {
+    client,
     createUser,
     loginUser,
     getUserByEmail,

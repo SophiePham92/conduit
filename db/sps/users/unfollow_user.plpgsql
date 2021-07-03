@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION public.unfollow_user(p_followed_username character varying, p_folower_user_id int)
+ RETURNS varchar
+ LANGUAGE plpgsql
+AS $function$
+declare 
+    followedUserId int;
+begin 
+    SELECT user_id FROM users WHERE username=p_followed_username INTO followedUserId;
+
+    DELETE FROM follows
+    WHERE followed_id=followedUserId AND follower_id=p_folower_user_id;
+
+    return 'success';
+end;
+$function$;

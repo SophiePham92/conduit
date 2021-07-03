@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION public.follow_user(p_followed_username character varying, p_folower_user_id int)
+ RETURNS varchar
+ LANGUAGE plpgsql
+AS $function$
+declare 
+    followedUserId int;
+begin 
+    SELECT user_id FROM users WHERE username=p_followed_username INTO followedUserId;
+
+    insert into follows
+    values (followedUserId, p_folower_user_id)
+    ON CONFLICT DO NOTHING;
+
+    return 'success';
+end;
+$function$;
