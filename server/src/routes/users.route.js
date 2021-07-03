@@ -27,6 +27,7 @@ router.post("/login", async (req,res) => {
 router.post("/", async (req,res) => {
     try {
         const {email, password: pPassword, username} = req.body;
+        // parse input
         const newUserInput = {email, password: pPassword, username}
         const newUserRes = await createUser(newUserInput);
         const {password, ...userDataReturned} = newUserRes.rows[0]
