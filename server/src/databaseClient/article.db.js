@@ -79,6 +79,9 @@ async function getArticles({myId, author, favorited, limit = 20, offset = 0, isF
             description,
             created_at,
             updated_at,
+            array(
+                SELECT name FROM tags WHERE tags.article_id = articles.article_id
+            ) as tagList,
             (
                 select 1::boolean from article_favorites
                 where article_favorites.user_id = $1 

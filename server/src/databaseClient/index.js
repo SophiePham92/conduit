@@ -27,6 +27,11 @@ const {
     deleteFavoriteArticleBySlug
 } = require("./article-favorites.db")
 
+const {
+    createTags,
+    getTags
+} = require("./tag.db")
+
 initDbConnection();
 
 module.exports = {
@@ -45,7 +50,9 @@ module.exports = {
     updateArticleBySlug,
     deleteArticleBySlug,
     favoriteArticleBySlug,
-    deleteFavoriteArticleBySlug
+    deleteFavoriteArticleBySlug,
+    createTags,
+    getTags
 }
 
 

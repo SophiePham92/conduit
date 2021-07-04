@@ -5,11 +5,11 @@ const {
     getArticleBySlug,
     getArticles,
     updateArticleBySlug,
-    deleteArticleBySlug
+    deleteArticleBySlug,
+    getProfileByUsername,
+    createTags
 } = require("../databaseClient");
-const {
-    getProfileByUsername
-} = require("../databaseClient")
+
 const { gatewayCheck } = require("../services/apiGateway")
 
 
@@ -27,10 +27,16 @@ router.post(
         const { title, description, body, tagList = [] } = req.body;
         const authorId = req.user.userId;     
         const slug = slugifyArticleTitle(title);
-        const data = await createArticle({slug, title, description, body, authorId})
+        const data = await createArticle({slug, title, description, body, authorId});
+        const article = data.rows[0];
+        const tagData = await createTags(article.article_id, tagList);
         res.json({
             message: "New article created!",
-            article: data.rows[0] 
+            article: {
+                ...article, 
+                tagList,
+                author: req.user
+            }
         })
     }
 )
