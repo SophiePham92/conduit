@@ -3,7 +3,9 @@ const slugify = require("slugify");
 const { 
     createArticle,
     getArticleBySlug,
-    getArticles
+    getArticles,
+    updateArticleBySlug,
+    deleteArticleBySlug
 } = require("../databaseClient");
 const {
     getProfileByUsername
@@ -74,11 +76,47 @@ router.get(
         const {tag, author, favorited, limit, offset} = req.query
         const myId = req.user && req.user.userId; 
         const articleData = await getArticles({myId, tag, author, favorited, limit, offset});
-        const parsedArticles = parseArticlesResult(articleData.rows)
+        const parsedArticles = parseArticlesResult(articleData.rows);
         res.json({
             message: "GET articles!",
             articles: parsedArticles,
             articlesCount: parsedArticles.length
+        })
+    }
+)
+
+router.put(
+    "/:slug",
+    gatewayCheck("user-required"),
+    async(req,res) => {
+        const { slug } = req.params;
+        const myId = req.user.userId; 
+        const {title, description, body} = req.body;
+        const newSlug = title ? slugifyArticleTitle(title) : ""
+        const articleData = await updateArticleBySlug(slug, {slug: newSlug, title, description, body});
+        const article = articleData.rows[0];
+        const authorProfileData = await getProfileByUsername(article.username, myId);
+        res.json({
+            message: "PUT article by slug!",
+            article: {
+                ...article,
+                author: authorProfileData.rows[0]
+            } 
+        })
+    }
+)
+
+router.delete(
+    "/:slug",
+    gatewayCheck("user-required"),
+    async(req,res) => {
+        const { slug } = req.params;
+        const myId = req.user.userId; 
+        const articleData = await deleteArticleBySlug(slug, myId);
+        const article = articleData.rows[0];
+        res.json({
+            message: "DELETE article by slug!",
+            article
         })
     }
 )

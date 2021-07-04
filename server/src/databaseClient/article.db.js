@@ -20,6 +20,34 @@ async function getArticleBySlug(slug, authorId){
     );
 }
 
+async function deleteArticleBySlug(slug, myId){
+    return client.query(
+        `DELETE FROM articles
+        WHERE slug = $1 AND author_id = $2
+        RETURNING *`,
+        [slug, myId] 
+    );
+}
+
+async function updateArticleBySlug(articleSlug, {slug, title, body, description}){
+    const updateItems = []
+    if(title) updateItems.push(`
+        title = '${title}',
+        slug = '${slug}'
+    `)
+    if(body) updateItems.push(`body = '${body}'`);
+    if(description) updateItems.push(`description = '${description}'`);
+    const updateString = updateItems.join(",");
+    console.log('meo', {updateString})
+    return client.query(
+        `UPDATE articles
+        SET ${updateString}
+        WHERE slug = $1
+        RETURNING *`,
+        [articleSlug] 
+    );
+}
+
 async function getArticles({myId, author, favorited, limit = 20, offset = 0, isFeed}){
     const whereConditions = [];
     if(author) whereConditions.push(`author.username = '${author}'`);
@@ -83,5 +111,7 @@ async function getArticles({myId, author, favorited, limit = 20, offset = 0, isF
 module.exports = {
     createArticle,
     getArticleBySlug,
-    getArticles
+    getArticles,
+    updateArticleBySlug,
+    deleteArticleBySlug
 }

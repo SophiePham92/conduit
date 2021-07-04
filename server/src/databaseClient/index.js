@@ -17,8 +17,10 @@ const {
 const {
     createArticle,
     getArticleBySlug,
-    getArticles
-} = require("./article.db")
+    getArticles,
+    updateArticleBySlug,
+    deleteArticleBySlug
+} = require("./article.db");
 
 initDbConnection();
 
@@ -34,7 +36,9 @@ module.exports = {
     unfollowUser,
     createArticle,
     getArticleBySlug,
-    getArticles
+    getArticles,
+    updateArticleBySlug,
+    deleteArticleBySlug
 }
 
 
