@@ -22,6 +22,11 @@ const {
     deleteArticleBySlug
 } = require("./article.db");
 
+const {
+    favoriteArticleBySlug,
+    deleteFavoriteArticleBySlug
+} = require("./article-favorites.db")
+
 initDbConnection();
 
 module.exports = {
@@ -38,7 +43,9 @@ module.exports = {
     getArticleBySlug,
     getArticles,
     updateArticleBySlug,
-    deleteArticleBySlug
+    deleteArticleBySlug,
+    favoriteArticleBySlug,
+    deleteFavoriteArticleBySlug
 }
 
 
