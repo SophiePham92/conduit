@@ -14,6 +14,12 @@ const {
     unfollowUser
 } = require("./profile.db"); 
 
+const {
+    createArticle,
+    getArticleBySlug,
+    getArticles
+} = require("./article.db")
+
 initDbConnection();
 
 module.exports = {
@@ -25,7 +31,10 @@ module.exports = {
     updateUser,
     getProfileByUsername,
     followUser,
-    unfollowUser
+    unfollowUser,
+    createArticle,
+    getArticleBySlug,
+    getArticles
 }
 
 

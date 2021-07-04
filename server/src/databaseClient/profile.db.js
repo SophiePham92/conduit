@@ -1,4 +1,4 @@
-const {client} = require("./index")
+const {client} = require("./init.db")
 
 async function getProfileByUsername(profileName, myId){
     return client.query(
@@ -9,7 +9,7 @@ async function getProfileByUsername(profileName, myId){
             end as following
         FROM users
         LEFT JOIN follows 
-            ON follower_id = $2
+            ON follower_id = $2 AND followed_id = user_id
         WHERE username = $1`,
         [profileName, myId] 
     );
